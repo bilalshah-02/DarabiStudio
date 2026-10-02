@@ -1,0 +1,10 @@
+{% extends "store/base.html" %}
+{% block title %}Something Went Wrong — Darabi Studio{% endblock %}
+{% block content %}
+<section class="confirm wrap reveal">
+  <span class="eyebrow" style="justify-content:center;">500</span>
+  <h1>Something slipped a gear.</h1>
+  <p style="color:var(--paper-dim);max-width:44ch;margin:20px auto;">We hit an unexpected error. Please try again in a moment, or reach out on WhatsApp if it persists.</p>
+  <a href="{% url 'home' %}" class="btn btn-solid">Back to Home</a>
+</section>
+{% endblock %}

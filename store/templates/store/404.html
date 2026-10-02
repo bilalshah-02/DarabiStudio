@@ -1,0 +1,10 @@
+{% extends "store/base.html" %}
+{% block title %}Page Not Found — Darabi Studio{% endblock %}
+{% block content %}
+<section class="confirm wrap reveal">
+  <span class="eyebrow" style="justify-content:center;">404</span>
+  <h1>This piece isn't here.</h1>
+  <p style="color:var(--paper-dim);max-width:44ch;margin:20px auto;">The page you're looking for has been moved or doesn't exist. Let's get you back to the collection.</p>
+  <a href="{% url 'catalog' %}" class="btn btn-solid">Back to Shop</a>
+</section>
+{% endblock %}

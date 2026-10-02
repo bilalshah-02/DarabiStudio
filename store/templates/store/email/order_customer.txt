@@ -1,0 +1,16 @@
+Hi {{ order.customer_name }},
+
+Thanks for your order from Darabi Studio!
+
+Order number: {{ order.order_number }}
+Payment method: {{ order.get_payment_method_display }}
+
+Items:
+{% for item in items %}- {{ item.product_name }} x{{ item.quantity }} — Rs. {{ item.line_total }}
+{% endfor %}
+Delivery Fee: Rs. {{ order.delivery_fee }}
+Total: Rs. {{ order.total }}
+
+We'll reach out on {{ order.phone }} to confirm before dispatch.
+
+— Darabi Studio

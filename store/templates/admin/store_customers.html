@@ -1,0 +1,36 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<div style="padding:10px 0;">
+  <form method="get" style="margin-bottom:20px;">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search by name or phone…"
+      style="padding:10px 14px;border-radius:4px;border:1px solid #444;background:#1b1b1e;color:#efece5;min-width:280px;">
+    <button type="submit" class="btn btn-warning">Search</button>
+  </form>
+
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="text-align:left;border-bottom:1px solid #333;font-size:0.78rem;color:#999;">
+          <th style="padding:12px 16px;">Name</th><th>Phone</th><th>Email</th><th>City</th>
+          <th>Orders</th><th>Total Spent</th><th>Last Order</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for c in customers %}
+        <tr style="border-bottom:1px solid #2a2a2a;">
+          <td style="padding:12px 16px;">{{ c.name }}</td>
+          <td>{{ c.phone }}</td>
+          <td>{{ c.email|default:"—" }}</td>
+          <td>{{ c.city }}</td>
+          <td>{{ c.orders_count }}</td>
+          <td>Rs. {{ c.total_spent|floatformat:0 }}</td>
+          <td><a href="{% url 'admin:store_order_change' c.last_order_id %}">{{ c.last_order_number }}</a></td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="7" style="padding:20px 16px;color:#888;">No customers yet — they'll show up here once orders come in.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

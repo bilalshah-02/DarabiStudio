@@ -1,0 +1,12 @@
+New order received.
+
+Order: {{ order.order_number }}
+Customer: {{ order.customer_name }} ({{ order.phone }})
+Address: {{ order.address }}, {{ order.city }}
+Payment: {{ order.get_payment_method_display }}
+
+Items:
+{% for item in items %}- {{ item.product_name }} x{{ item.quantity }} — Rs. {{ item.line_total }}
+{% endfor %}
+Delivery Fee: Rs. {{ order.delivery_fee }}
+Total: Rs. {{ order.total }}

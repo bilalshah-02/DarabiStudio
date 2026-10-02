@@ -1,0 +1,122 @@
+{% extends "store/base.html" %}
+{% block content %}
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow">Est. 2025 — Lahore</span>
+      <h1>Time, worn<br><em>with intent.</em></h1>
+      <p class="lede">A curated edit of watches for people who notice details. Every piece checked, every order tracked, delivered anywhere in Pakistan.</p>
+      <div class="cta-row">
+        <a href="{% url 'catalog' %}" class="btn btn-solid">Shop the Collection</a>
+        <a href="#latest" class="btn">New Arrivals</a>
+      </div>
+    </div>
+    <div class="dial">
+      <svg viewBox="0 0 400 400" fill="none">
+        <circle cx="200" cy="200" r="180" stroke="#cba668" stroke-width="1" opacity="0.5"/>
+        <circle cx="200" cy="200" r="140" stroke="#efece5" stroke-width="0.5" opacity="0.22"/>
+        <g stroke="#efece5" opacity="0.35">
+          <line x1="200" y1="30" x2="200" y2="50"/>
+          <line x1="200" y1="350" x2="200" y2="370"/>
+          <line x1="30" y1="200" x2="50" y2="200"/>
+          <line x1="350" y1="200" x2="370" y2="200"/>
+        </g>
+        <line id="dial-hour" x1="200" y1="200" x2="200" y2="110" stroke="#cba668" stroke-width="4" stroke-linecap="round"/>
+        <line id="dial-min" x1="200" y1="200" x2="200" y2="70" stroke="#efece5" stroke-width="2.5" stroke-linecap="round"/>
+        <line id="dial-sec" x1="200" y1="200" x2="200" y2="60" stroke="#8a6f42" stroke-width="1"/>
+        <circle cx="200" cy="200" r="6" fill="#cba668"/>
+      </svg>
+    </div>
+    <div class="scroll-cue"><span class="line"></span>Scroll</div>
+  </div>
+</section>
+
+{% if featured %}
+<section class="section wrap">
+  <div class="section-head reveal">
+    <h2>Featured</h2>
+    <a href="{% url 'catalog' %}" class="eyebrow">View All →</a>
+  </div>
+  <div class="grid">
+    {% for p in featured %}
+    <div class="reveal">{% include "store/_product_card.html" %}</div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if categories %}
+<section class="section wrap">
+  <div class="section-head reveal"><h2>Shop by Category</h2></div>
+  <div class="cat-grid">
+    {% for c in categories %}
+    <a href="{% url 'catalog' %}?category={{ c.slug }}" class="cat-tile reveal">
+      {% if c.image %}
+        <img src="{{ c.image.url }}" alt="{{ c.name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.55;">
+      {% else %}
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
+      {% endif %}
+      <div style="position:relative;z-index:1;"><span class="name">{{ c.name }}</span><span class="count">{{ c.products.count }} piece{{ c.products.count|pluralize }}</span></div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section class="story reveal wrap">
+  <div class="frame">
+    <svg viewBox="0 0 200 200" fill="none" stroke="#cba668" stroke-width="1.2">
+      <circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="60"/>
+      <line x1="100" y1="100" x2="100" y2="50"/><line x1="100" y1="100" x2="135" y2="100"/>
+    </svg>
+  </div>
+  <div>
+    <h2>Checked by hand,<br>before it reaches you.</h2>
+    <p>Every piece in the collection is inspected for movement, finish, and fit before it ships — the same care we put into every post, now built into every order.</p>
+    <a href="{% url 'about' %}" class="btn" style="margin-top:10px;">Our Story →</a>
+  </div>
+</section>
+
+{% if testimonials %}
+<section class="section wrap">
+  <div class="section-head reveal"><h2>What Customers Say</h2></div>
+  <div class="testimonials">
+    {% for t in testimonials %}
+    <div class="testimonial-card reveal">
+      <div class="stars">{% for i in "12345" %}{% if forloop.counter <= t.rating %}★{% else %}☆{% endif %}{% endfor %}</div>
+      <p>"{{ t.quote }}"</p>
+      <div class="who">{{ t.customer_name }}{% if t.city %}, {{ t.city }}{% endif %}</div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section class="section wrap" id="latest">
+  <div class="section-head reveal"><h2>New Arrivals</h2></div>
+  {% if latest %}
+  <div class="grid">
+    {% for p in latest %}
+    <div class="reveal">{% include "store/_product_card.html" %}</div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#cba668" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+    <p>No products yet — add your first watch from the admin panel.</p>
+    <a href="/admin/store/product/add/" class="btn">Open Admin</a>
+  </div>
+  {% endif %}
+</section>
+
+<section class="cta-band reveal">
+  <div class="wrap">
+    <h2>Have a piece in mind?</h2>
+    <p>Message us on WhatsApp and we'll help you find the right one, or confirm stock before you order.</p>
+    <a href="{% if STORE_WHATSAPP_LINK %}{{ STORE_WHATSAPP_LINK }}{% else %}{% url 'contact' %}{% endif %}"
+       class="btn btn-solid" {% if STORE_WHATSAPP_LINK %}target="_blank" rel="noopener"{% endif %}>
+       {% if STORE_WHATSAPP_LINK %}Chat on WhatsApp{% else %}Get in Touch{% endif %}
+    </a>
+  </div>
+</section>
+{% endblock %}

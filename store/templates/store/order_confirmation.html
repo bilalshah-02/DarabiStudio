@@ -1,0 +1,40 @@
+{% extends "store/base.html" %}
+{% block title %}Order Confirmed — Darabi Studio{% endblock %}
+{% block content %}
+<section class="confirm wrap reveal">
+  <svg class="check-icon" viewBox="0 0 60 60" fill="none">
+    <circle cx="30" cy="30" r="27" stroke="#cba668" stroke-width="1.5"/>
+    <path d="M18 31l8 8 16-18" stroke="#cba668" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+      stroke-dasharray="40" stroke-dashoffset="40" style="animation: drawCheck 0.6s ease 0.3s forwards;"/>
+  </svg>
+  <span class="eyebrow" style="justify-content:center;">Thank you, {{ order.customer_name }}</span>
+  <h1>Order Received</h1>
+  <div class="order-num">{{ order.order_number }}</div>
+
+  <div style="max-width:360px;margin:24px auto 0;text-align:left;">
+    <div class="summary-row"><span>Subtotal</span><span class="price">Rs. {{ order.subtotal|floatformat:0 }}</span></div>
+    <div class="summary-row"><span>Delivery Fee</span><span class="price">Rs. {{ order.delivery_fee|floatformat:0 }}</span></div>
+    <div class="summary-row total"><span>Total</span><span class="price">Rs. {{ order.total|floatformat:0 }}</span></div>
+  </div>
+
+  {% if order.payment_method == "COD" %}
+  <p style="color:var(--paper-dim);max-width:44ch;margin:24px auto 0;">
+    Cash on Delivery — nothing more to do. We'll reach out on {{ order.phone }} to confirm details before dispatch.
+  </p>
+  {% else %}
+  <p style="color:var(--paper-dim);max-width:44ch;margin:24px auto 0;">
+    Your order is confirmed via {{ order.get_payment_method_display }}. To proceed with delivery, please message us on WhatsApp now to complete your payment — we'll share the details and confirm once received.
+  </p>
+  <div style="margin-top:24px;">
+    {% if STORE_WHATSAPP_LINK %}
+    <a href="{{ STORE_WHATSAPP_LINK }}?text=Hi%2C%20I%27d%20like%20to%20complete%20payment%20for%20order%20{{ order.order_number }}" class="btn btn-solid" target="_blank" rel="noopener">Message Us on WhatsApp</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <div style="margin-top:36px;">
+    <a href="{% url 'catalog' %}" class="btn">Continue Shopping</a>
+  </div>
+</section>
+<style>@keyframes drawCheck { to { stroke-dashoffset: 0; } }</style>
+{% endblock %}

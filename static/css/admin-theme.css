@@ -1,0 +1,8 @@
+:root { --brass: #c6a15b; }
+.navbar.navbar-dark { background-color: #0b0b0c !important; border-bottom: 2px solid var(--brass); }
+.main-sidebar { background-color: #141416 !important; }
+.brand-link { border-bottom: 1px solid rgba(198,161,91,0.3) !important; }
+.btn-warning { background-color: var(--brass) !important; border-color: var(--brass) !important; color: #0b0b0c !important; font-weight: 600; }
+.nav-sidebar > .nav-item > .nav-link.active { background-color: rgba(198,161,91,0.15) !important; border-left: 3px solid var(--brass); }
+.small-box, .card { border-radius: 4px !important; }
+a { color: var(--brass); }

@@ -1,0 +1,52 @@
+{% extends "store/base.html" %}
+{% block title %}Shop — Darabi Studio{% endblock %}
+{% block content %}
+<section class="section wrap">
+  <div class="breadcrumbs reveal">
+    <a href="{% url 'home' %}">Home</a><span class="sep">/</span>
+    {% if active_category_obj %}<a href="{% url 'catalog' %}">Shop</a><span class="sep">/</span>{{ active_category_obj.name }}{% else %}Shop{% endif %}
+  </div>
+
+  <div class="section-head reveal">
+    <h2>{% if active_category_obj %}{{ active_category_obj.name }}{% else %}All Watches{% endif %}</h2>
+    <form method="get" class="search-box">
+      {% if active_category %}<input type="hidden" name="category" value="{{ active_category }}">{% endif %}
+      <input type="text" name="q" value="{{ query }}" placeholder="Search watches…">
+      <button type="submit" class="btn">Search</button>
+    </form>
+  </div>
+
+  <div class="filters reveal">
+    <a href="{% url 'catalog' %}" class="{% if not active_category %}active{% endif %}">All</a>
+    {% for c in categories %}
+      <a href="?category={{ c.slug }}" class="{% if active_category == c.slug %}active{% endif %}">{{ c.name }}</a>
+    {% endfor %}
+  </div>
+
+  <div class="sort-bar reveal">
+    <span class="result-count">{{ products|length }} result{{ products|length|pluralize }}</span>
+    <form method="get" id="sortForm">
+      {% if active_category %}<input type="hidden" name="category" value="{{ active_category }}">{% endif %}
+      {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
+      <select name="sort" onchange="document.getElementById('sortForm').submit()">
+        <option value="newest" {% if sort == "newest" %}selected{% endif %}>Newest First</option>
+        <option value="price_low" {% if sort == "price_low" %}selected{% endif %}>Price: Low to High</option>
+        <option value="price_high" {% if sort == "price_high" %}selected{% endif %}>Price: High to Low</option>
+        <option value="name" {% if sort == "name" %}selected{% endif %}>Name: A–Z</option>
+      </select>
+    </form>
+  </div>
+
+  {% if products %}
+  <div class="grid">
+    {% for p in products %}
+    <div class="reveal">{% include "store/_product_card.html" %}</div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    {% if query %}No watches match "{{ query }}".{% else %}No products found in this category yet.{% endif %}
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

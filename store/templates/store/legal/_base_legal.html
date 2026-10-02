@@ -1,0 +1,9 @@
+{% extends "store/base.html" %}
+{% block content %}
+<section class="section wrap" style="max-width:820px;">
+  <div class="section-head reveal"><h2>{% block legal_title %}{% endblock %}</h2></div>
+  <div class="reveal" style="color:var(--paper-dim);line-height:1.9;font-size:0.95rem;">
+    {% block legal_body %}{% endblock %}
+  </div>
+</section>
+{% endblock %}

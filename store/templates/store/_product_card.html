@@ -1,0 +1,23 @@
+<a href="{% url 'product_detail' p.slug %}" class="card">
+  {% if p.images.first %}
+    <div class="thumb">
+      <img src="{{ p.images.first.image.url }}" alt="{{ p.name }}">
+      {% if p.is_featured %}<span class="featured-badge">Featured</span>{% endif %}
+    </div>
+  {% else %}
+    <div class="thumb placeholder">
+      {% if p.is_featured %}<span class="featured-badge">Featured</span>{% endif %}
+      <svg viewBox="0 0 100 100" fill="none" stroke="#cba668" stroke-width="1.2">
+        <circle cx="50" cy="50" r="38"/><line x1="50" y1="50" x2="50" y2="26"/><line x1="50" y1="50" x2="68" y2="50"/>
+      </svg>
+    </div>
+  {% endif %}
+  <div class="info">
+    <span class="brand">{{ p.brand|default:"Darabi Studio" }}</span>
+    <h3>{{ p.name }}</h3>
+    <div class="row">
+      <span class="price">Rs. {{ p.price|floatformat:0 }}</span>
+      <span class="stock-tag {% if p.in_stock %}in{% else %}out{% endif %}">{% if p.in_stock %}In Stock{% else %}Sold Out{% endif %}</span>
+    </div>
+  </div>
+</a>

@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Darabi Studio — Fine Timepieces{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}Curated watches, sold with care from Lahore. Nationwide delivery across Pakistan with Cash on Delivery.{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}Darabi Studio — Fine Timepieces{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}A curated edit of watches for people who notice details. Delivered nationwide across Pakistan.{% endblock %}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon.svg' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="bar wrap">
+      <a href="{% url 'home' %}" class="logo">Darabi Studio</a>
+      <nav class="nav-links">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'catalog' %}">Shop</a>
+        <a href="{% url 'about' %}">Our Story</a>
+        <a href="{% url 'contact' %}">Contact</a>
+        <a href="{% url 'track_order' %}">Track Order</a>
+        <a href="{% url 'cart_detail' %}" class="cart-link">Cart
+          {% if request.session.cart %}<span class="cart-badge">{{ request.session.cart|length }}</span>{% endif %}
+        </a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'catalog' %}">Shop</a>
+    <a href="{% url 'about' %}">Our Story</a>
+    <a href="{% url 'contact' %}">Contact</a>
+    <a href="{% url 'track_order' %}">Track Order</a>
+    <a href="{% url 'cart_detail' %}">Cart {% if request.session.cart %}({{ request.session.cart|length }}){% endif %}</a>
+  </div>
+
+  <div class="trust-bar">
+    <div class="wrap">
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 12l6 6L21 6"/></svg>Authenticity Checked</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg>Cash on Delivery — Nationwide</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Same-Day Dispatch, Lahore</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 1 1 8.5-8.5z"/></svg>WhatsApp Support</span>
+    </div>
+  </div>
+
+  {% if messages %}
+    <div class="wrap">
+      <ul class="messages">
+        {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <main>{% block content %}{% endblock %}</main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="cols">
+        <div>
+          <div class="logo" style="margin-bottom:14px;">Darabi Studio</div>
+          <p style="color:var(--paper-dim);font-size:0.88rem;max-width:32ch;line-height:1.7;">A curated edit of watches, sold with care from Lahore to every corner of Pakistan.</p>
+        </div>
+        <div>
+          <h4>Shop</h4>
+          <a href="{% url 'catalog' %}">All Watches</a>
+          <a href="{% url 'cart_detail' %}">Your Cart</a>
+          <a href="{% url 'track_order' %}">Track Order</a>
+        </div>
+        <div>
+          <h4>Studio</h4>
+          <a href="{% url 'about' %}">Our Story</a>
+          <a href="{% url 'contact' %}">Contact Us</a>
+        </div>
+        <div>
+          <h4>Policies</h4>
+          <a href="{% url 'shipping_policy' %}">Shipping</a>
+          <a href="{% url 'returns_policy' %}">Returns &amp; Refunds</a>
+          <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
+          <a href="{% url 'terms' %}">Terms &amp; Conditions</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© {% now "Y" %} Darabi Studio. All rights reserved.</span>
+        <div class="social-row">
+          <a href="{{ STORE_INSTAGRAM }}" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

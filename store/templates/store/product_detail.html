@@ -1,0 +1,80 @@
+{% extends "store/base.html" %}
+{% block title %}{{ product.name }} — Darabi Studio{% endblock %}
+{% block og_title %}{{ product.name }} — Darabi Studio{% endblock %}
+{% block content %}
+<section class="wrap">
+  <div class="breadcrumbs reveal" style="margin-top:30px;">
+    <a href="{% url 'home' %}">Home</a><span class="sep">/</span>
+    <a href="{% url 'catalog' %}">Shop</a><span class="sep">/</span>
+    {% if product.category %}<a href="{% url 'catalog' %}?category={{ product.category.slug }}">{{ product.category.name }}</a><span class="sep">/</span>{% endif %}
+    {{ product.name }}
+  </div>
+
+  <div class="pd">
+    <div class="reveal">
+      {% with images=product.images.all %}
+      {% if images %}
+        <div class="pd-gallery-main"><img src="{{ images.0.image.url }}" alt="{{ product.name }}"></div>
+        {% if images|length > 1 %}
+        <div class="pd-thumbs">
+          {% for img in images %}
+          <button data-full="{{ img.image.url }}" class="{% if forloop.first %}active{% endif %}"><img src="{{ img.image.url }}" alt=""></button>
+          {% endfor %}
+        </div>
+        {% endif %}
+      {% else %}
+        <div class="pd-gallery-main" style="display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 100 100" fill="none" stroke="#cba668" stroke-width="1" style="width:35%;">
+            <circle cx="50" cy="50" r="38"/><line x1="50" y1="50" x2="50" y2="26"/><line x1="50" y1="50" x2="68" y2="50"/>
+          </svg>
+        </div>
+      {% endif %}
+      {% endwith %}
+    </div>
+    <div class="pd-info reveal">
+      <span class="eyebrow">{{ product.brand|default:"Darabi Studio" }}</span>
+      <h1>{{ product.name }}</h1>
+      <span class="price">Rs. {{ product.price|floatformat:0 }}
+        {% if product.compare_at_price %}
+          <span class="compare">Rs. {{ product.compare_at_price|floatformat:0 }}</span>
+        {% endif %}
+      </span>
+      <p class="desc">{{ product.description|default:"A refined piece from the Darabi Studio collection, selected for build quality and everyday wearability." }}</p>
+      <div class="pd-divider"></div>
+
+      {% if product.in_stock %}
+      <form method="post" action="{% url 'cart_add' product.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="cart_detail">
+        <div class="qty-row">
+          <div class="qty-stepper">
+            <button type="button" data-step="-1" aria-label="Decrease">−</button>
+            <input type="number" id="qty" name="quantity" value="1" min="1" max="{% if product.stock > 10 %}10{% else %}{{ product.stock }}{% endif %}">
+            <button type="button" data-step="1" aria-label="Increase">+</button>
+          </div>
+          {% if product.is_low_stock %}<span class="stock-tag in">Only a few left</span>{% else %}<span class="stock-tag in">In Stock</span>{% endif %}
+        </div>
+        <button type="submit" class="btn btn-solid btn-full">Add to Cart</button>
+      </form>
+      {% else %}
+        <button class="btn btn-full" disabled>Sold Out</button>
+      {% endif %}
+
+      <div class="pd-trust">
+        <div class="pd-trust-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 12l6 6L21 6"/></svg>Authenticity checked before dispatch</div>
+        <div class="pd-trust-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg>Cash on Delivery available nationwide</div>
+        <div class="pd-trust-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 1 1 8.5-8.5z"/></svg>{% if STORE_WHATSAPP_LINK %}<a href="{{ STORE_WHATSAPP_LINK }}" target="_blank" rel="noopener">Questions? Message us on WhatsApp</a>{% else %}Questions? Message us on WhatsApp{% endif %}</div>
+      </div>
+    </div>
+  </div>
+
+  {% if related %}
+  <div class="section-head reveal"><h2>You may also like</h2></div>
+  <div class="grid" style="margin-bottom:60px;">
+    {% for p in related %}
+    <div class="reveal">{% include "store/_product_card.html" %}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</section>
+{% endblock %}
