@@ -505,3 +505,30 @@ body.page-loaded main { animation: pageIn 0.6s var(--ease-soft); }
 .track-step.done .label { color: var(--brass); }
 .track-step:not(:last-child)::after { content: ''; position: absolute; top: 5px; left: 55%; width: 90%; height: 1px; background: var(--line-strong); }
 .track-step.done:not(:last-child)::after { background: var(--brass-dim); }
+
+/* ---- Hero background photo: dim, greyscale, mirrored, faded ---- */
+.hero { position: relative; overflow: hidden; }
+.hero .wrap { position: relative; z-index: 1; }
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0%, transparent 22%, #000 62%, #000 100%),
+    linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, transparent 0%, transparent 22%, #000 62%, #000 100%),
+    linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-composite: intersect;
+}
+.hero-bg > div {
+  position: absolute; inset: 0;
+  background: url('../img/hero-bg.jpg') center / cover no-repeat;
+  filter: grayscale(1) contrast(1.05);
+  opacity: 0.16;
+  transform: scaleX(-1);
+}
+@media (max-width: 860px) {
+  .hero-bg > div { opacity: 0.09; }
+  .hero-bg { -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+             mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent); }
+}
