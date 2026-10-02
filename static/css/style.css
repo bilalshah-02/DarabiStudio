@@ -506,29 +506,45 @@ body.page-loaded main { animation: pageIn 0.6s var(--ease-soft); }
 .track-step:not(:last-child)::after { content: ''; position: absolute; top: 5px; left: 55%; width: 90%; height: 1px; background: var(--line-strong); }
 .track-step.done:not(:last-child)::after { background: var(--brass-dim); }
 
-/* ---- Hero background photo: dim, greyscale, mirrored, faded ---- */
+/* ---- Hero background photo (v2): greyscale, unmirrored, dial-focused ---- */
 .hero { position: relative; overflow: hidden; }
 .hero .wrap { position: relative; z-index: 1; }
 .hero-bg {
   position: absolute; inset: 0; z-index: 0; pointer-events: none;
   -webkit-mask-image:
-    linear-gradient(90deg, transparent 0%, transparent 22%, #000 62%, #000 100%),
-    linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+    linear-gradient(90deg, transparent 0%, transparent 34%, #000 60%, #000 70%, transparent 97%),
+    linear-gradient(180deg, transparent 0%, #000 24%, #000 76%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-image:
-    linear-gradient(90deg, transparent 0%, transparent 22%, #000 62%, #000 100%),
-    linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+    linear-gradient(90deg, transparent 0%, transparent 34%, #000 60%, #000 70%, transparent 97%),
+    linear-gradient(180deg, transparent 0%, #000 24%, #000 76%, transparent 100%);
   mask-composite: intersect;
 }
 .hero-bg > div {
+  --o: 0.2;
   position: absolute; inset: 0;
-  background: url('../img/hero-bg.jpg') center / cover no-repeat;
-  filter: grayscale(1) contrast(1.05);
-  opacity: 0.16;
-  transform: scaleX(-1);
+  background: url('../img/hero-bg.jpg') 60% center / cover no-repeat;
+  filter: grayscale(1) contrast(1.08) brightness(0.92);
+  opacity: var(--o);
+  animation: heroBgIn 1.8s ease 0.1s both;
 }
+.hero-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(8,8,10,.6) 0%, rgba(8,8,10,.2) 40%, transparent 60%);
+}
+/* soft dark disc behind the clock so it stays the focal point */
+.dial { position: relative; }
+.dial::before {
+  content: ""; position: absolute; inset: -14%; z-index: -1; pointer-events: none;
+  background: radial-gradient(circle closest-side, rgba(8,8,10,.82) 0%, rgba(8,8,10,.62) 55%, rgba(8,8,10,0) 100%);
+}
+@keyframes heroBgIn { from { opacity: 0; } to { opacity: var(--o); } }
 @media (max-width: 860px) {
-  .hero-bg > div { opacity: 0.09; }
-  .hero-bg { -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
-             mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent); }
+  .hero-bg > div { --o: 0.09; }
+  .hero-bg {
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+    mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+  }
+  .dial::before { display: none; }
 }
+@media (prefers-reduced-motion: reduce) { .hero-bg > div { animation: none; } }
