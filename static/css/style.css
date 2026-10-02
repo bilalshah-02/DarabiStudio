@@ -548,3 +548,26 @@ body.page-loaded main { animation: pageIn 0.6s var(--ease-soft); }
   .dial::before { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .hero-bg > div { animation: none; } }
+
+/* ---- Story panel: logo mark ---- */
+.story .frame { position: relative; overflow: hidden; }
+.story .frame::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(203,166,104,.20) 0%, rgba(203,166,104,.07) 38%, transparent 68%);
+  animation: logoGlow 6s ease-in-out infinite;
+}
+.story .frame .story-logo {
+  position: relative; z-index: 1;
+  width: 82%; height: auto; max-width: 440px;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(ellipse 62% 62% at 50% 50%, #000 62%, transparent 100%);
+  mask-image: radial-gradient(ellipse 62% 62% at 50% 50%, #000 62%, transparent 100%);
+  filter: drop-shadow(0 10px 28px rgba(203,166,104,.25));
+  animation: logoFloat 7s ease-in-out infinite;
+}
+@keyframes logoFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes logoGlow  { 0%,100% { opacity: .65; } 50% { opacity: 1; } }
+@media (max-width: 860px) { .story .frame .story-logo { width: 70%; } }
+@media (prefers-reduced-motion: reduce) {
+  .story .frame .story-logo, .story .frame::after { animation: none; }
+}
