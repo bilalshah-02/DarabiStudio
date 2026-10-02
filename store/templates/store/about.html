@@ -1,4 +1,5 @@
 {% extends "store/base.html" %}
+{% load static %}
 {% block title %}Our Story — Darabi Studio{% endblock %}
 {% block content %}
 <section class="section wrap">
@@ -6,10 +7,7 @@
   <div class="section-head reveal"><h2>Our Story</h2></div>
   <div class="story reveal">
     <div class="frame">
-      <svg viewBox="0 0 200 200" fill="none" stroke="#cba668" stroke-width="1.2">
-        <circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="60"/>
-        <line x1="100" y1="100" x2="100" y2="50"/><line x1="100" y1="100" x2="135" y2="100"/>
-      </svg>
+    <img src="{% static 'img/logo-mark.png' %}" alt="Darabi Studio" class="story-logo" width="600" height="540" loading="lazy">
     </div>
     <div>
       <h2>Built one watch<br>at a time.</h2>
