@@ -512,19 +512,19 @@ body.page-loaded main { animation: pageIn 0.6s var(--ease-soft); }
 .hero-bg {
   position: absolute; inset: 0; z-index: 0; pointer-events: none;
   -webkit-mask-image:
-    linear-gradient(90deg, transparent 0%, transparent 34%, #000 60%, #000 70%, transparent 97%),
+    linear-gradient(90deg, transparent 0%, transparent 28%, #000 55%, #000 82%, transparent 100%),
     linear-gradient(180deg, transparent 0%, #000 24%, #000 76%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-image:
-    linear-gradient(90deg, transparent 0%, transparent 34%, #000 60%, #000 70%, transparent 97%),
+    linear-gradient(90deg, transparent 0%, transparent 28%, #000 55%, #000 82%, transparent 100%),
     linear-gradient(180deg, transparent 0%, #000 24%, #000 76%, transparent 100%);
   mask-composite: intersect;
 }
 .hero-bg > div {
-  --o: 0.2;
+  --o: 0.4;
   position: absolute; inset: 0;
   background: url('../img/hero-bg.jpg') 60% center / cover no-repeat;
-  filter: grayscale(1) contrast(1.08) brightness(0.92);
+  filter: grayscale(1) contrast(1.08) brightness(1.08);
   opacity: var(--o);
   animation: heroBgIn 1.8s ease 0.1s both;
 }
@@ -536,11 +536,11 @@ body.page-loaded main { animation: pageIn 0.6s var(--ease-soft); }
 .dial { position: relative; }
 .dial::before {
   content: ""; position: absolute; inset: -14%; z-index: -1; pointer-events: none;
-  background: radial-gradient(circle closest-side, rgba(8,8,10,.82) 0%, rgba(8,8,10,.62) 55%, rgba(8,8,10,0) 100%);
+  background: radial-gradient(circle closest-side, rgba(8,8,10,.5) 0%, rgba(8,8,10,.3) 55%, rgba(8,8,10,0) 100%);
 }
 @keyframes heroBgIn { from { opacity: 0; } to { opacity: var(--o); } }
 @media (max-width: 860px) {
-  .hero-bg > div { --o: 0.09; }
+  .hero-bg > div { --o: 0.16; }
   .hero-bg {
     -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
     mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
