@@ -641,3 +641,39 @@ html, body { max-width: 100%; overflow-x: clip; }
 .pd-gallery-main, .pd-info { max-width: 100%; }
 .site-header, .trust-bar { width: 100%; }
 img, svg, video { max-width: 100%; }
+
+/* ---- Cart: card layout on phones ---- */
+@media (max-width: 640px) {
+  .cart-table, .cart-table tbody { display: block; width: 100%; }
+  .cart-table tr {
+    display: grid; grid-template-columns: 1fr 1fr; column-gap: 12px; row-gap: 14px;
+    padding: 20px 0; border-bottom: 1px solid var(--line);
+  }
+  .cart-table td { display: block; padding: 0; border: 0; min-width: 0; }
+  .cart-table tr:hover td { background: none; }
+  .cart-table td:nth-child(1) { grid-area: 1 / 1 / 2 / 3; }
+  .cart-table td:nth-child(2) { grid-area: 2 / 1 / 3 / 2; }
+  .cart-table td:nth-child(4) { grid-area: 2 / 2 / 3 / 3; text-align: right; }
+  .cart-table td:nth-child(3) { grid-area: 3 / 1 / 4 / 3; }
+  .cart-table td:nth-child(5) { grid-area: 4 / 1 / 5 / 3; }
+  .cart-table td:nth-child(2)::before,
+  .cart-table td:nth-child(4)::before {
+    display: block; margin-bottom: 4px;
+    font-family: var(--mono); font-size: .62rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--paper-faint);
+  }
+  .cart-table td:nth-child(2)::before { content: "Price"; }
+  .cart-table td:nth-child(4)::before { content: "Total"; }
+  .cart-item { gap: 14px; align-items: flex-start; }
+  .cart-item img, .cart-item-ph { width: 76px; height: 76px; flex-shrink: 0; }
+  .cart-item span { min-width: 0; line-height: 1.4; font-size: 1.02rem; overflow-wrap: anywhere; }
+  .cart-item-form { gap: 10px; align-items: stretch; }
+  .qty-inline { width: 84px; min-height: 46px; font-size: 1rem; text-align: center; }
+  .cart-item-form .btn { flex: 1; min-height: 46px; justify-content: center; }
+  .remove-link {
+    display: inline-block; padding: 6px 0; font-size: .8rem;
+    color: var(--paper-faint); text-decoration: underline; text-underline-offset: 3px;
+  }
+  .cart-summary { max-width: none; margin: 0; }
+  .summary-row.total { padding-top: 10px; }
+}
