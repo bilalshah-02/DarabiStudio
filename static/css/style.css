@@ -583,7 +583,7 @@ body.page-loaded main { animation: pageIn 0.6s var(--ease-soft); }
 .trust-group { display: flex; flex-shrink: 0; gap: 56px; padding-right: 56px; }
 .trust-group .trust-item { white-space: nowrap; }
 .trust-marquee:hover .trust-track { animation-play-state: paused; }
-@keyframes trustSlide { from { transform: translateX(-25%); } to { transform: translateX(0); } }
+@keyframes trustSlide { from { transform: translateX(0); } to { transform: translateX(-25%); } }
 @media (prefers-reduced-motion: reduce) {
   .trust-track { animation: none; width: auto; padding: 0; }
   .trust-group[aria-hidden="true"] { display: none; }
